@@ -1,0 +1,17 @@
+@hostname = localhost
+@port = 3000
+@host = {{hostname}}:{{port}}
+@contentType = application/json; charset=utf-8
+###
+GET http://{{host}}
+Content-Type: {{contentType}}
+
+### Create User
+POST http://{{host}}/users
+Content-Type: {{contentType}}
+
+{
+    "username":"aofiee"
+}
+
+###
