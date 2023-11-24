@@ -2,10 +2,9 @@
 use std::net::SocketAddr;
 use axum::{
     routing::get,
-    response::{Json, IntoResponse},
     Router,
 };
-use serde_json::{json};
+
 
 pub mod products;
 
