@@ -3,13 +3,14 @@
 @host = {{hostname}}:{{port}}
 @contentType = application/json; charset=utf-8
 ###
-GET http://{{host}}/1
+GET http://{{host}}/
 Content-Type: {{contentType}}
 
 ###
-GET http://{{host}}/2
+POST http://{{host}}/users
 Content-Type: {{contentType}}
 
+{"username":"Nui"}
 ###
 GET http://{{host}}/3
 Content-Type: {{contentType}}
