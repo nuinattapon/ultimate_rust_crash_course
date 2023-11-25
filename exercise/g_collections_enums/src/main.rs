@@ -26,24 +26,26 @@ impl Shot {
         // - return 0 points if `self` is a Miss
         match self {
             Shot::Bullseye => 5,
-            Shot::Hit(x) => {
-                if x < 3.0 {
-                    2
-                } else {
-                    1
-                }
-            }
+            // Shot::Hit(x) => {
+            //     if x < 3.0 {
+            //         2
+            //     } else {
+            //         1
+            //     }
+            // }
+            Shot::Hit(x) if x < 3.0 => 2,
+            Shot::Hit(x) => 1,
             Shot::Miss => 0,
         }
     }
 }
 
 impl Clone for Shot {
-    fn clone(&self) -> Shot {
+    fn clone(&self) -> Self {
         match self {
             Shot::Bullseye => Shot::Bullseye,
             Shot::Miss => Shot::Miss,
-            crate::Shot::Hit(x) => crate::Shot::Hit(*x),
+            crate::Shot::Hit(x) => crate::Shot::Hit(x.clone()),
         }
     }
 }
@@ -60,24 +62,34 @@ fn main() {
     //      - Less than 1.0 -- `Shot::Bullseye`
     //      - Between 1.0 and 5.0 -- `Shot::Hit(value)`
     //      - Greater than 5.0 -- `Shot::Miss`
-    let mut total = 0;
+
     for coord in arrow_coords {
         coord.print_description();
-        shots.push(if coord.distance_from_center() < 1.0 {
-            Shot::Bullseye
-        } else if coord.distance_from_center() <= 5.0 {
-            Shot::Hit(coord.distance_from_center())
-        } else {
-            Shot::Miss
+        // shots.push(if coord.distance_from_center() < 1.0 {
+        //     Shot::Bullseye
+        // } else if coord.distance_from_center() <= 5.0 {
+        //     Shot::Hit(coord.distance_from_center())
+        // } else {
+        //     Shot::Miss
+        // });
+
+        shots.push(match coord.distance_from_center() {
+            x if x < 1.0 => Shot::Bullseye,
+            x if x <= 5.0 => Shot::Hit(x),
+            _ => Shot::Miss,
         });
     }
+    println!("");
 
+    let mut total = 0;
     // 3. Finally, loop through each shot in shots and add its points to total
+
     for shot in shots {
         println!("{:?}, {}", shot, shot.clone().points());
-
         total += shot.points();
     }
+
+    println!("");
     println!("Final point total is: {}", total);
 }
 
@@ -94,7 +106,7 @@ impl Coord {
     }
     fn print_description(&self) {
         println!(
-            "coord is {:.3} away, at ({:.1}, {:.1})",
+            "coord is {:.2} away, at ({:.1}, {:.1})",
             self.distance_from_center(),
             self.x,
             self.y
