@@ -28,11 +28,12 @@ fn main() {
     // Hint 1: use `.starts_with("b")` and `.contains("a")`
     // Hint 2: `&&` is the boolean "AND" operator
     //
-    if eat(arg) {
+    if eat(arg.clone()) {
         println!("Might be bananas");
     } else {
         println!("Not bananas");
     }
+    println!("{}", arg);
 
     // Try running this program with "boat", "banana", and "grapes" as the arguments :-)
 
@@ -55,7 +56,7 @@ fn inspect(s: &String) {
     // code with `cargo run apple` and `cargo run apples'.  Hint: use `.ends_with("s")` on the
     // String reference
     if s.ends_with("s") {
-        println!("{} are pural", s);
+        println!("{} is pural", s);
     } else {
         println!("{} is singular", s);
     }
